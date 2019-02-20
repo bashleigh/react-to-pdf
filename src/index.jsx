@@ -20,7 +20,9 @@ class ReactToPdf extends PureComponent {
     html2canvas(source.current).then(canvas => {
       const imgData = canvas.toDataURL('image/png');
       const pdf = new JsPdf(options);
-      pdf.addImage(imgData, 'JPEG', x, y);
+      const width = pdf.internal.pageSize.getWidth();
+      const height = pdf.internal.pageSize.getHeight();
+      pdf.addImage(imgData, 'JPEG', x, y, width, height);
       pdf.save(filename);
       if (onComplete) onComplete();
     });
